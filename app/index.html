@@ -3,20 +3,117 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
+<title>Neon Coast — Vice City Cover Maker</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
+  <section class="controls" aria-label="Cover controls">
+    <header class="brand">
+      <h1>Neon Coast</h1>
+      <p class="tag">Vice City cover maker — your photo in, a poster out. Works offline; photos never leave this machine.</p>
+    </header>
+
+    <fieldset class="group" id="group-photos">
+      <legend>1 · Photos</legend>
+      <p class="hint">Fill up to three slots. A slot feeds the panels marked with its letter. Tap a sample to try it instantly.</p>
+      <div class="slot" data-slot="A">
+        <span class="slot-letter">A</span>
+        <label class="file-label">Upload photo <input type="file" accept="image/*" data-photo="A"></label>
+        <span class="slot-name" data-name="A">Empty</span>
+      </div>
+      <div class="slot" data-slot="B">
+        <span class="slot-letter">B</span>
+        <label class="file-label">Upload photo <input type="file" accept="image/*" data-photo="B"></label>
+        <span class="slot-name" data-name="B">Empty</span>
+      </div>
+      <div class="slot" data-slot="C">
+        <span class="slot-letter">C</span>
+        <label class="file-label">Upload photo <input type="file" accept="image/*" data-photo="C"></label>
+        <span class="slot-name" data-name="C">Empty</span>
+      </div>
+      <div class="samples">
+        <button type="button" data-sample="pier" data-slot="A">Pier sample → A</button>
+        <button type="button" data-sample="boulevard" data-slot="B">Boulevard sample → B</button>
+        <button type="button" data-sample="neon" data-slot="C">Neon Alley scene → C</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="group" id="group-layout">
+      <legend>2 · Layout</legend>
+      <div class="choices" id="layouts">
+        <button type="button" data-layout="solo">Solo hero</button>
+        <button type="button" data-layout="duo">Duo split</button>
+        <button type="button" data-layout="trio">Trio strip</button>
+        <button type="button" data-layout="quad">Quad grid</button>
+        <button type="button" data-layout="mosaic">Nine mosaic</button>
+        <button type="button" data-layout="stack">Story stack</button>
+      </div>
+      <p class="hint">Click a panel in the preview to tune that panel below.</p>
+    </fieldset>
+
+    <fieldset class="group" id="group-grade">
+      <legend>3 · Colour grade</legend>
+      <div class="choices grades" id="grades">
+        <button type="button" data-grade="sunset" style="--g1:#ff9a3d;--g2:#e83e8c">Vice sunset</button>
+        <button type="button" data-grade="neon" style="--g1:#00e5ff;--g2:#ff2e88">Neon night</button>
+        <button type="button" data-grade="gold" style="--g1:#ffd76a;--g2:#ff7a18">Palm gold</button>
+        <button type="button" data-grade="dusk" style="--g1:#2dd4bf;--g2:#7c3aed">Teal dusk</button>
+        <button type="button" data-grade="bubble" style="--g1:#ff7ad9;--g2:#22d3ee">Bubblegum</button>
+        <button type="button" data-grade="noir" style="--g1:#e5e5e5;--g2:#111111">Noir chrome</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="group" id="group-words">
+      <legend>4 · Lettering</legend>
+      <label>Title <input id="title" type="text" maxlength="28" value="NEON COAST"></label>
+      <label>Tagline <input id="tagline" type="text" maxlength="48" value="VICE CITY · EST. 2026"></label>
+      <div class="choices" id="letterings">
+        <button type="button" data-lettering="block">Block outline</button>
+        <button type="button" data-lettering="glow">Neon glow</button>
+        <button type="button" data-lettering="gradient">Sunset gradient</button>
+      </div>
+      <label>Title size <input id="title-size" type="range" min="70" max="140" value="100"></label>
+      <label>Caption spot
+        <select id="caption-pos">
+          <option value="bottom">Bottom band</option>
+          <option value="top">Top band</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <fieldset class="group" id="group-panel">
+      <legend>5 · Selected panel</legend>
+      <p class="hint" id="panel-label">Panel 1 — photo A</p>
+      <label>Zoom <input id="zoom" type="range" min="100" max="220" value="100"></label>
+      <label>Shift sideways <input id="pan-x" type="range" min="-40" max="40" value="0"></label>
+      <label>Shift up / down <input id="pan-y" type="range" min="-40" max="40" value="0"></label>
+    </fieldset>
+
+    <fieldset class="group" id="group-export">
+      <legend>6 · Export PNG</legend>
+      <div class="exports">
+        <button type="button" id="export-square">Square 1080 × 1080</button>
+        <button type="button" id="export-portrait">Portrait 1080 × 1350</button>
+        <button type="button" id="export-wide">Wide 1920 × 1080</button>
+      </div>
+      <label>Preview size
+        <select id="preview-size">
+          <option value="1080x1080">Square 1080 × 1080</option>
+          <option value="1080x1350">Portrait 1080 × 1350</option>
+          <option value="1920x1080">Wide 1920 × 1080</option>
+        </select>
+      </label>
+      <p id="status" role="status">Load a photo or tap a sample to start.</p>
+    </fieldset>
+
+    <p class="fineprint">Original art, made on this machine. No Rockstar logo, artwork or font; no upload, no watermark.</p>
   </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
+
+  <section class="stage" aria-label="Live preview">
+    <canvas id="cover" width="1080" height="1080" aria-label="Live cover preview"></canvas>
+    <p class="stage-hint">Live preview — click any panel to tune it.</p>
+  </section>
 </main>
 <script type="module" src="./src/main.js"></script>
 </body>

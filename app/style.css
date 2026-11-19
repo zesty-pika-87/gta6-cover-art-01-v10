@@ -1,12 +1,41 @@
-html, body { margin: 0; height: 100%; background: #f2f0f4; color: #1d1b22; font: 15px/1.4 system-ui, sans-serif; }
-.app { display: flex; gap: 32px; align-items: center; justify-content: center; height: 100%; padding: 24px; box-sizing: border-box; }
-.controls { display: flex; flex-direction: column; gap: 14px; width: 280px; }
-.controls h1 { margin: 0; font-size: 28px; }
-.controls p { margin: 0; color: #5c5866; }
-label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
-input[type=text] { font: inherit; padding: 8px; border: 1px solid #c9c4d1; border-radius: 6px; }
-button { font: inherit; font-weight: 700; padding: 10px; border: 0; border-radius: 6px; background: #1d1b22; color: #fff; cursor: pointer; }
-canvas { width: min(70vh, 60vw); height: min(70vh, 60vw); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); }
-body.shot-cover .controls { display: none; }
+/* Neon Coast editor: a dark workbench so the bright cover is the star. */
+html, body { margin: 0; min-height: 100%; background: #14101d; color: #f4f1fa; font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.app { display: flex; gap: 28px; align-items: flex-start; justify-content: center; padding: 26px; box-sizing: border-box; }
+.controls { width: 330px; flex: none; display: flex; flex-direction: column; gap: 16px; }
+.brand h1 { margin: 0; font-size: 34px; letter-spacing: 0.06em; text-transform: uppercase; background: linear-gradient(92deg, #ffb347, #ff2e88 55%, #00e5ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.brand .tag { margin: 6px 0 0; color: #b9b2cc; font-size: 13.5px; }
+.group { border: 1px solid #2e2742; border-radius: 12px; padding: 14px; margin: 0; background: #1c1628; }
+.group legend { font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; font-size: 12px; color: #ffd76a; padding: 0 6px; }
+.hint { margin: 0 0 10px; color: #a49dbb; font-size: 13px; }
+.slot { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.slot-letter { width: 28px; height: 28px; flex: none; display: grid; place-items: center; border-radius: 8px; background: #ff2e88; font-weight: 900; }
+.slot[data-slot="B"] .slot-letter { background: #00b3c8; }
+.slot[data-slot="C"] .slot-letter { background: #ffb347; color: #241300; }
+.file-label { flex: 1; font-weight: 600; cursor: pointer; color: #e8e2f5; }
+.file-label input { display: block; margin-top: 4px; max-width: 100%; font-size: 12px; color: #b9b2cc; }
+.slot-name { font-size: 12px; color: #8f88a5; max-width: 74px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.samples { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.samples button { font-size: 12px; padding: 6px 9px; }
+.choices { display: flex; flex-wrap: wrap; gap: 7px; }
+.choices button, .exports button, .samples button { font: inherit; font-weight: 700; padding: 8px 11px; border: 1px solid #453a63; border-radius: 8px; background: #261e38; color: #f4f1fa; cursor: pointer; }
+.choices button:hover, .exports button:hover, .samples button:hover { border-color: #ff2e88; }
+.choices button.active { background: #ff2e88; border-color: #ff2e88; color: #fff; }
+.choices button[data-grade].active { background: linear-gradient(120deg, var(--g1), var(--g2)); color: #14060f; border-color: transparent; }
+.grades button { background: linear-gradient(120deg, var(--g1), var(--g2)); color: #14060f; border-color: transparent; opacity: 0.85; }
+.grades button.active { opacity: 1; outline: 3px solid #fff; outline-offset: 1px; }
+label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; margin-bottom: 10px; }
+label:last-child { margin-bottom: 0; }
+input[type=text], select { font: inherit; padding: 9px 10px; border: 1px solid #453a63; border-radius: 8px; background: #140f1f; color: #f4f1fa; }
+input[type=range] { accent-color: #ff2e88; }
+.exports { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.exports button { background: linear-gradient(92deg, #ff7a18, #ff2e88); border: 0; padding: 11px; }
+#status { margin: 10px 0 0; color: #9fe8d8; font-size: 13px; min-height: 1.4em; }
+.fineprint { margin: 0; color: #6f6788; font-size: 12px; }
+.stage { flex: 1; max-width: 860px; display: flex; flex-direction: column; align-items: center; gap: 12px; position: sticky; top: 26px; }
+.stage canvas { width: min(100%, 78vh); height: auto; aspect-ratio: auto; border-radius: 6px; box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px #3a2f55; cursor: crosshair; background: #241a33; }
+.stage-hint { margin: 0; color: #8f88a5; font-size: 13px; }
+body.shot-cover .controls, body.shot-cover .stage-hint { display: none; }
 body.shot-cover .app { padding: 0; }
-body.shot-cover canvas { width: 100vw; height: 100vh; box-shadow: none; }
+body.shot-cover .stage { max-width: none; position: static; }
+body.shot-cover canvas { width: 100vw; height: 100vh; object-fit: contain; box-shadow: none; border-radius: 0; }
+@media (max-width: 900px) { .app { flex-direction: column; } .controls { width: 100%; } .stage { position: static; max-width: 100%; } }
