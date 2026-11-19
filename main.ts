@@ -27,6 +27,9 @@ if (existsSync(join(here, 'screenshots'))) cpSync(join(here, 'screenshots'), joi
 // scorer would refuse (more than 4 screenshots or one over 256 KiB; more than 993 files in app/ or 48 MiB of app
 // files, in all, or a path under app/ over 1000 bytes: app/ counts beside /output's own 1000-entry cap, its
 // screenshots/ and dossier.json).
+// The dossier text is capped at 160 KiB: the judge reads the screenshots first
+// and only an outline of the source, so the cap keeps the entry light without
+// hiding any file that fits.
 writeFileSync(
   join(out, 'dossier.json'),
   buildDossier(out, {
